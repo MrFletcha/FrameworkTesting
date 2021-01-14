@@ -1,0 +1,88 @@
+package com.spartaglobal.restassured.framework.controller;
+
+import java.util.ArrayList;
+
+import static io.restassured.RestAssured.given;
+
+public class ValueExists {
+
+    public static boolean isStarshipByName(String ship) {
+        if (isNull(ship)) {
+            return false;
+        }
+        ArrayList<String> allShips = new ArrayList<>();
+        for (int i = 1; i < 4; i++) {
+            allShips.addAll(given().get("https://swapi.dev/api/starships/?page=" + i).then().extract().path("results.name"));
+        }
+        return allShips.contains(ship);
+    }
+
+    public static boolean isPersonByName(String person) {
+        if (isNull(person)) {
+            return false;
+        }
+
+        ArrayList<String> allPeople = new ArrayList<>();
+        for (int i = 1; i < 9; i++) {
+            allPeople.addAll(given().get("https://swapi.dev/api/people/?page=" + i).then().extract().path("results.name"));
+        }
+        return (allPeople.contains(person));
+    }
+
+    public static boolean isPlanetByName(String planet) {
+        if (isNull(planet)) {
+            return false;
+        }
+
+        ArrayList<String> allPlanets = new ArrayList<>();
+        for (int i = 1; i < 6; i++) {
+            allPlanets.addAll(given().get("https://swapi.dev/api/planets/?page=" + i)
+                    .then().extract().path("results.name"));
+        }
+
+        return allPlanets.contains(planet);
+    }
+
+    public static boolean isFilmByTitle(String film) {
+        if (isNull(film)) {
+            return false;
+        }
+
+        ArrayList<String> allFilms = new ArrayList<>();
+        allFilms.addAll(given().get("https://swapi.dev/api/films/?page=1")
+                .then().extract().path("results.title"));
+
+        return allFilms.contains(film);
+    }
+
+    public static boolean isSpeciesByName(String species) {
+        if (isNull(species)) {
+            return false;
+        }
+        ArrayList<String> allSpecies = new ArrayList<>();
+        for (int i = 1; i < 4; i++) {
+            allSpecies.addAll(given().get("https://swapi.dev/api/species/?page=" + i)
+                    .then().extract().path("results.name"));
+        }
+
+        return allSpecies.contains(species);
+    }
+
+    public static boolean isVehicleByName(String vehicle) {
+        if (isNull(vehicle)) {
+            return false;
+        }
+
+        ArrayList<String> allVehicles = new ArrayList<>();
+        for (int i = 1; i < 4; i++) {
+            allVehicles.addAll(given().get("https://swapi.dev/api/vehicles/?page=" + i)
+                    .then().extract().path("results.name"));
+        }
+
+        return allVehicles.contains(vehicle);
+    }
+
+    static boolean isNull(String string) {
+        return (string == null || string.equals(""));
+    }
+}
