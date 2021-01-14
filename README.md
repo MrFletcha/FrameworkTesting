@@ -88,15 +88,15 @@ Checks if current person was in the film searched
 3. hasVehicle
 Checks if current person has the selected vehicle
 
-While the rest of these classes are plain old java objects(POJO), they will be updated with simular searches.
+The below classes all have simular methods that return a String that shows the subject you're searching for, orginally this was a boolean, but was changed to give clarity on what exactly the tester was searching and if the right subject has been used. 
 
-- Films (POJO)
-- Species (POJO)
-- Vehicles (POJO)
-- Starships (POJO)
-- Planets (POJO)
+To chnage this back to boolean format is a simple return value change, so if desired then it can be an easy fix.
 
-
+- Films
+- Species
+- Vehicles 
+- Starships 
+- Planets 
 
 
 FrameWork Tests:
