@@ -1,8 +1,10 @@
 package com.spartaglobal.restassured.framework.types;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.spartaglobal.restassured.framework.controller.ValueInjector;
 
 public class Starship {
 
@@ -35,7 +37,7 @@ public class Starship {
     @JsonProperty("starship_class")
     private String starshipClass;
     @JsonProperty("pilots")
-    private List<Object> pilots = null;
+    private List<String> pilots = null;
     @JsonProperty("films")
     private List<String> films = null;
     @JsonProperty("created")
@@ -44,6 +46,8 @@ public class Starship {
     private String edited;
     @JsonProperty("url")
     private String url;
+
+    List<String> arr = new ArrayList<>();
 
     public String getName() { return name; }
 
@@ -71,7 +75,7 @@ public class Starship {
 
     public String getStarshipClass() { return starshipClass; }
 
-    public List<Object> getPilots() { return pilots; }
+    public List<String> getPilots() { return pilots; }
 
     public List<String> getFilms() { return films; }
 
@@ -81,4 +85,29 @@ public class Starship {
 
     public String getUrl() { return url; }
 
+    public String hasPilot(String person)
+    {
+        arr = getPilots();
+        People people;
+        for (String s : arr) {
+            people = (People) ValueInjector.createDTO(s);
+            if (person.equals(people.getName())) {
+                return people.getName() + " is a Pilot";
+            }
+        }
+        return "No pilot with this name found";
+    }
+
+    public String inFilm(String film)
+    {
+        arr = getFilms();
+        Films films;
+        for (String s : arr) {
+            films = (Films) ValueInjector.createDTO(s);
+            if (film.equals(films.getTitle())) {
+                return "Is in this Film: " + films.getTitle();
+            }
+        }
+        return "Not in this Film";
+    }
 }

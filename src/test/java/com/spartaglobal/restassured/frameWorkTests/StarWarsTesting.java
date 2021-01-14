@@ -90,6 +90,8 @@ public class StarWarsTesting {
             Starship starship = (Starship)
                     ValueInjector.createDTO(people.getStarships().get(0));
 
+            Assertions.assertEquals(people.getName() + " is a Pilot", starship.hasPilot(people.getName()));
+
             given().get(people.getStarships().get(0)).then().assertThat()
                     .body("name", Matchers.equalTo(starship.getName()));
         }
@@ -97,6 +99,8 @@ public class StarWarsTesting {
         {
             Planets planets = (Planets)
                     ValueInjector.createDTO(people.getHomeworld());
+
+            Assertions.assertEquals(people.getName() + " is a Resident", planets.hasResidents(people.getName()));
 
             given().get(people.getHomeworld()).then().assertThat()
                     .body("name", Matchers.equalTo(planets.getName()));

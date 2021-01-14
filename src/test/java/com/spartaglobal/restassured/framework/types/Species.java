@@ -1,7 +1,9 @@
 package com.spartaglobal.restassured.framework.types;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.spartaglobal.restassured.framework.controller.ValueInjector;
 
 public class Species {
 
@@ -36,6 +38,7 @@ public class Species {
     @JsonProperty("url")
     private String url;
 
+    List<String> arr = new ArrayList<>();
 
     public String getName() { return name; }
 
@@ -66,5 +69,31 @@ public class Species {
     public String getEdited() { return edited; }
 
     public String getUrl() { return url; }
+
+    public String hasPerson(String person)
+    {
+        arr = getPeople();
+        People people;
+        for (String s : arr) {
+            people = (People) ValueInjector.createDTO(s);
+            if (person.equals(people.getName())) {
+                return people.getName() + " is this species";
+            }
+        }
+        return "No person with this name found in species";
+    }
+
+    public String inFilm(String film)
+    {
+        arr = getFilms();
+        Films films;
+        for (String s : arr) {
+            films = (Films) ValueInjector.createDTO(s);
+            if (film.equals(films.getTitle())) {
+                return "This species is in this Film: " + films.getTitle();
+            }
+        }
+        return "Not in this Film";
+    }
 
 }

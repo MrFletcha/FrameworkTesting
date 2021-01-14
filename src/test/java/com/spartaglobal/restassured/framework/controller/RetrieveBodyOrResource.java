@@ -11,7 +11,6 @@ public class RetrieveBodyOrResource {
     private static final String BASEURL = "https://swapi.dev/api/";
     private String body;
     private String resource;
-    ConnectionManager con = new ConnectionManager();
 
     public String getBody() {
         return body;

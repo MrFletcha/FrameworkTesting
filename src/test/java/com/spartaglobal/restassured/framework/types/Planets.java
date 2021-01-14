@@ -1,5 +1,6 @@
 package com.spartaglobal.restassured.framework.types;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.spartaglobal.restassured.framework.controller.ValueInjector;
 
 public class Planets {
 
@@ -41,6 +43,8 @@ public class Planets {
     @JsonProperty("url")
     private String url;
 
+    List<String> arr = new ArrayList<>();
+
     public String getName() { return name; }
 
     public String getRotationPeriod() { return rotationPeriod; }
@@ -68,4 +72,32 @@ public class Planets {
     public String getEdited() { return edited; }
 
     public String getUrl() { return url; }
+
+
+    public String hasResidents(String person)
+    {
+        arr = getResidents();
+        People people;
+        for (String s : arr) {
+            people = (People) ValueInjector.createDTO(s);
+            if (person.equals(people.getName())) {
+                return people.getName() + " is a Resident";
+            }
+        }
+        return "No Residents found with this name";
+    }
+
+    public String inFilm(String film)
+    {
+        arr = getFilms();
+        Films films;
+        for (String s : arr) {
+            films = (Films) ValueInjector.createDTO(s);
+            if (film.equals(films.getTitle())) {
+                return "Is in this Film: " + films.getTitle();
+            }
+        }
+        return "Not in this Film";
+    }
+
 }
