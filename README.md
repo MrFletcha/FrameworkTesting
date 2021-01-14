@@ -16,8 +16,6 @@ FrameWork Package:
 - ValueExists
 - ValueInjector 
 
-FrameWork Tests:
-- StarwarsTests
 
 ConnectionManager
 
@@ -78,3 +76,30 @@ Methods & Uses
 
 6. isVehicleByName
 - Gets all Vehicle name values from API and checks if given value is amoung them
+
+
+
+Type Package:
+- People (DTO)
+1. hasShip
+Checks if the current Person has the ship being searched
+2. inFilm
+Checks if current person was in the film searched
+3. hasVehicle
+Checks if current person has the selected vehicle
+
+While the rest of these classes are plain old java objects(POJO), they will be updated with simular searches.
+
+- Films (POJO)
+- Species (POJO)
+- Vehicles (POJO)
+- Starships (POJO)
+- Planets (POJO)
+
+
+
+
+FrameWork Tests:
+- StarwarsTests
+Example tests that can be run through the use of either JUNIT or REST-assured
+
