@@ -1,7 +1,9 @@
 package com.spartaglobal.restassured.framework.types;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.spartaglobal.restassured.framework.controller.ValueInjector;
 
 public class Films {
 
@@ -34,6 +36,8 @@ public class Films {
     @JsonProperty("url")
     private String url;
 
+    List<String> arr = new ArrayList<>();
+
     public String getTitle() { return title; }
 
     public Integer getEpisodeId() { return episodeId; }
@@ -61,4 +65,56 @@ public class Films {
     public String getEdited() { return edited; }
 
     public String getUrl() { return url; }
+
+    public String hasShip(String ship)
+    {
+        arr = getStarships();
+        Starship starship;
+        for (String s : arr) {
+            starship = (Starship) ValueInjector.createDTO(s);
+            if (ship.equals(starship.getName())) {
+                return starship.getName() + " is in this Film";
+            }
+        }
+        return "No starship with this name found";
+    }
+
+    public String hasCharacters(String character)
+    {
+        arr = getCharacters();
+        People people;
+        for (String s : arr) {
+            people = (People) ValueInjector.createDTO(s);
+            if (character.equals(people.getName())) {
+                return people.getName() + " is in this Film";
+            }
+        }
+        return "This film doesn't have this Character in it.";
+    }
+
+    public String hasVehicle(String vehicle)
+    {
+        arr = getVehicles();
+        Vehicles vehicles;
+        for (String s : arr) {
+            vehicles = (Vehicles) ValueInjector.createDTO(s);
+            if (vehicle.equals(vehicles.getName())) {
+                return vehicles.getName() + " is in this Film";
+            }
+        }
+        return "This Film doesn't have this vehicle";
+    }
+
+    public String hasPlanet(String planet)
+    {
+        arr = getVehicles();
+        Planets planets;
+        for (String s : arr) {
+            planets = (Planets) ValueInjector.createDTO(s);
+            if (planet.equals(planets.getName())) {
+                return planets.getName() + " is in this Film";
+            }
+        }
+        return "This film doesn't have this planet";
+    }
 }

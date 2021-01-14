@@ -26,9 +26,8 @@ public class ValueInjector {
 
     public static Object createDTO(String body) {
         object = null;
-        if (isNull(body)) {
-            return object;
-        }
+        if (isNull(body)) { return object; }
+
         String resource = whichObject(body);
         switch (resource) {
             case "people":
