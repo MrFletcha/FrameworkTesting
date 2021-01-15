@@ -35,7 +35,9 @@ public class StarWarsTesting {
     void connectionStatus() {
         given().get(url).then().assertThat().statusCode(200).and()
                 .header("Server", Matchers.equalTo("nginx/1.16.1"));
-        Assertions.assertEquals(200, connectionManager.getStatusCode());
+
+        Assertions.assertEquals(200, connectionManager.isValidAddress(url));
+        connectionManager.headerCheck("connection");
     }
 
     @ParameterizedTest
@@ -53,7 +55,6 @@ public class StarWarsTesting {
         Assertions.assertEquals(301, connectionManager.isValidAddress(people.getHomeworld()));
         Assertions.assertEquals(301, connectionManager.isValidAddress(people.getStarships().get(0)));
     }
-
 
     @ParameterizedTest(name = "{index}")
     @ValueSource(strings = {"https://swapi.dev/api/people/1/", "https://swapi.dev/api/planets/1/", "https://swapi.dev/api/starships/12/"})
@@ -86,6 +87,8 @@ public class StarWarsTesting {
     void testingDto() {
         people = (People) ValueInjector.createDTO(url);
         given().get(url).then().assertThat().body("name", Matchers.equalTo(people.getName()));
+        Assertions.assertTrue(ValueExists.allBirthYears().contains(people.getBirthYear()));
+        System.out.println(ValueExists.allBirthYears());
     }
 
     @ParameterizedTest

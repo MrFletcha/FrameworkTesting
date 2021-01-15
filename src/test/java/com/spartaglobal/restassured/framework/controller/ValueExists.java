@@ -1,6 +1,12 @@
 package com.spartaglobal.restassured.framework.controller;
 
+import org.hamcrest.Matchers;
+
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.regex.Pattern;
 
 import static io.restassured.RestAssured.given;
 
@@ -81,6 +87,16 @@ public class ValueExists {
         }
         System.out.println("The current count of Vehicles is: " + allVehicles.size() + " over five pages.");
         return allVehicles.contains(vehicle);
+    }
+
+    public static Set<String> allBirthYears()
+    {
+        Set<String> birthRecord = new HashSet<>();
+        for(int i = 0; i < 10; i++)
+        {
+            birthRecord.addAll(given().get("https://swapi.dev/api/people").then().extract().path("results.birth_year"));
+        }
+        return birthRecord;
     }
 
     static boolean isNull(String string) {

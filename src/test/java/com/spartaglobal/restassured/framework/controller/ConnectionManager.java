@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import static io.restassured.RestAssured.given;
+
 public class ConnectionManager {
 
     private static final String BASEURL = "https://swapi.dev/api/";
@@ -73,5 +75,13 @@ public class ConnectionManager {
 
         System.err.println("Status code: " + getStatusCode() + " Code Description: " + result.get(String.valueOf(getStatusCode())) +"\n");
         return getStatusCode();
+    }
+
+    public String headerCheck(String header)
+    {
+        String headerValue = given().get(url).then().extract().header(header);
+        if(headerValue == null) { return "null"; }
+        System.out.println("The header you searched for has a value of: " + headerValue);
+        return headerValue;
     }
 }
