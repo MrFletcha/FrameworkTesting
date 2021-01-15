@@ -37,7 +37,9 @@ public class StarWarsTesting {
                 .header("Server", Matchers.equalTo("nginx/1.16.1"));
 
         Assertions.assertEquals(200, connectionManager.isValidAddress(url));
-        connectionManager.headerCheck("connection");
+        connectionManager.headerCheck("connection", url);
+        int count = connectionManager.headerCount(url);
+        System.out.println("Total headers: " + count);
     }
 
     @ParameterizedTest
