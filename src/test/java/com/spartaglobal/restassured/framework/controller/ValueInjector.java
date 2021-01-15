@@ -24,11 +24,13 @@ public class ValueInjector {
         return bodyCheck.getResource();
     }
 
-    public static Object createDTO(String body) {
+    public static Object createDTO(String url) {
         object = null;
-        if (isNull(body)) { return object; }
+        if (isNull(url)) {
+            System.out.println("Your url is null.");
+            return object; }
 
-        String resource = whichObject(body);
+        String resource = whichObject(url);
         switch (resource) {
             case "people":
                 try {
