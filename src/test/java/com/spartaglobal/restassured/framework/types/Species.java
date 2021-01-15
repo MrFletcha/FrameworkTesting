@@ -70,30 +70,34 @@ public class Species {
 
     public String getUrl() { return url; }
 
-    public String hasPerson(String person)
+    public boolean hasPerson(String person)
     {
         arr = getPeople();
         People people;
         for (String s : arr) {
             people = (People) ValueInjector.createDTO(s);
             if (person.equals(people.getName())) {
-                return people.getName() + " is this species";
+                System.out.println(people.getName() + " is this species");
+                return true;
             }
         }
-        return "No person with this name found in species";
+        System.out.println("No person with this name found in species");
+        return false;
     }
 
-    public String inFilm(String film)
+    public boolean inFilm(String film)
     {
         arr = getFilms();
         Films films;
         for (String s : arr) {
             films = (Films) ValueInjector.createDTO(s);
             if (film.equals(films.getTitle())) {
-                return "This species is in this Film: " + films.getTitle();
+                System.out.println("This species is in this Film: " + films.getTitle());
+                return true;
             }
         }
-        return "Not in this Film";
+        System.out.println("Not in this Film");
+        return false;
     }
 
 }

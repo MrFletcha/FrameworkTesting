@@ -84,42 +84,48 @@ public class People{
     //Additional methods for Testing
 
     //Set of array checkers to see if the Ship, Film or Vehicle is in the characters profile
-    public String hasShip(String ship)
+    public boolean hasShip(String ship)
     {
         arr = getStarships();
         Starship starship;
         for (String s : arr) {
             starship = (Starship) ValueInjector.createDTO(s);
             if (ship.equals(starship.getName())) {
-                return "Has this Starship: " + starship.getName();
+                System.out.println("Has this Starship: " + starship.getName());
+                return true;
             }
         }
-        return "No starship with this name found";
+        System.out.println("No starship with this name found");
+        return false;
     }
 
-    public String inFilm(String film)
+    public boolean inFilm(String film)
     {
         arr = getFilms();
         Films films;
         for (String s : arr) {
             films = (Films) ValueInjector.createDTO(s);
             if (film.equals(films.getTitle())) {
-                return "Is in this Film: " + films.getTitle();
+                System.out.println(films.getTitle() + " is in this Film");
+                return true;
             }
         }
-        return "Not in this Film";
+        System.out.println("Not in this Film");
+        return false;
     }
 
-    public String hasVehicle(String vehicle)
+    public boolean hasVehicle(String vehicle)
     {
         arr = getVehicles();
         Vehicles vehicles;
         for (String s : arr) {
             vehicles = (Vehicles) ValueInjector.createDTO(s);
             if (vehicle.equals(vehicles.getName())) {
-                return "Is in this Film: " + vehicles.getName();
+                System.out.println(vehicles.getName() + " is in this Film");
+                return true;
             }
         }
-        return "This character doesn't have it";
+        System.out.println("This Character doesn't have it");
+        return false;
     }
 }

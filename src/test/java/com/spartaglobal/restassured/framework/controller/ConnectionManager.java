@@ -1,7 +1,9 @@
 package com.spartaglobal.restassured.framework.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.restassured.http.Header;
 import io.restassured.response.Response;
+import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Headers;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,8 +12,11 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import static io.restassured.RestAssured.given;
 
 public class ConnectionManager {
 
@@ -68,10 +73,27 @@ public class ConnectionManager {
         }
         if(getStatusCode() != 200)
         {
-            System.err.println("This URL is not valid, please check following description of error code: ");
+            System.err.println("The url address of " + url + " is not valid, please check following description of error code: ");
         }
 
-        System.err.println("Status code: " + getStatusCode() + " Code Description: " + result.get(String.valueOf(getStatusCode())));
+        System.err.println("Status code: " + getStatusCode() + " Code Description: " + result.get(String.valueOf(getStatusCode())) +"\n");
         return getStatusCode();
+    }
+
+    public String headerCheck(String header, String urls)
+    {
+        String headerValue = given().get(urls).then().extract().header(header);
+        if(headerValue == null) { return "null"; }
+        System.out.println("The header you searched for has a value of: " + headerValue);
+        return headerValue;
+    }
+
+    public int headerCount(String urls)
+    {
+        setUrl(urls);
+        getStatusCode();
+        List<Header> headers = given().get(url).then().extract().response().headers().asList();
+        System.out.println(headers.toString());
+        return headers.size();
     }
 }

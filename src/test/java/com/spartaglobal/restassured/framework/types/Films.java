@@ -66,55 +66,63 @@ public class Films {
 
     public String getUrl() { return url; }
 
-    public String hasShip(String ship)
+    public boolean hasShip(String ship)
     {
         arr = getStarships();
         Starship starship;
         for (String s : arr) {
             starship = (Starship) ValueInjector.createDTO(s);
             if (ship.equals(starship.getName())) {
-                return starship.getName() + " is in this Film";
+                System.out.println(starship.getName() + " is in this Film");
+                return true;
             }
         }
-        return "No starship with this name found";
+        System.out.println("This Film doesn't have this starship in it.");
+        return false;
     }
 
-    public String hasCharacters(String character)
+    public boolean hasCharacters(String character)
     {
         arr = getCharacters();
         People people;
         for (String s : arr) {
             people = (People) ValueInjector.createDTO(s);
             if (character.equals(people.getName())) {
-                return people.getName() + " is in this Film";
+                System.out.println(people.getName() + " is in this Film");
+                return true;
             }
         }
-        return "This film doesn't have this Character in it.";
+        System.out.println("This film doesn't have this Character in it.");
+        return false;
     }
 
-    public String hasVehicle(String vehicle)
+    public boolean hasVehicle(String vehicle)
     {
         arr = getVehicles();
         Vehicles vehicles;
         for (String s : arr) {
             vehicles = (Vehicles) ValueInjector.createDTO(s);
             if (vehicle.equals(vehicles.getName())) {
-                return vehicles.getName() + " is in this Film";
+                System.out.println(vehicles.getName() + " is in this Film");
+                return true;
             }
         }
-        return "This Film doesn't have this vehicle";
+        System.out.println("This Film doesn't have this vehicle.");
+        return false;
     }
 
-    public String hasPlanet(String planet)
+    public boolean hasPlanet(String planet)
     {
         arr = getVehicles();
         Planets planets;
         for (String s : arr) {
             planets = (Planets) ValueInjector.createDTO(s);
             if (planet.equals(planets.getName())) {
-                return planets.getName() + " is in this Film";
+                System.out.println(planets.getName() + " is in this Film");
+                return true;
             }
         }
-        return "This film doesn't have this planet";
+        System.out.println("This film doesn't have this planet.");
+        return false;
     }
 }
