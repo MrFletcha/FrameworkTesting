@@ -68,10 +68,10 @@ public class ConnectionManager {
         }
         if(getStatusCode() != 200)
         {
-            System.err.println("This URL is not valid, please check following description of error code: ");
+            System.err.println("The url address of " + url + " is not valid, please check following description of error code: ");
         }
 
-        System.err.println("Status code: " + getStatusCode() + " Code Description: " + result.get(String.valueOf(getStatusCode())));
+        System.err.println("Status code: " + getStatusCode() + " Code Description: " + result.get(String.valueOf(getStatusCode())) +"\n");
         return getStatusCode();
     }
 }

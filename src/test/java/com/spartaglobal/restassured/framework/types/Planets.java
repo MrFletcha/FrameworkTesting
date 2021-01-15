@@ -74,30 +74,34 @@ public class Planets {
     public String getUrl() { return url; }
 
 
-    public String hasResidents(String person)
+    public boolean hasResidents(String person)
     {
         arr = getResidents();
         People people;
         for (String s : arr) {
             people = (People) ValueInjector.createDTO(s);
             if (person.equals(people.getName())) {
-                return people.getName() + " is a Resident";
+                System.out.println(people.getName() + " is a Resident");
+                return true;
             }
         }
-        return "No Residents found with this name";
+        System.out.println("No Residents found with this name");
+        return false;
     }
 
-    public String inFilm(String film)
+    public boolean inFilm(String film)
     {
         arr = getFilms();
         Films films;
         for (String s : arr) {
             films = (Films) ValueInjector.createDTO(s);
             if (film.equals(films.getTitle())) {
-                return "Is in this Film: " + films.getTitle();
+                System.out.println("Is in this Film: " + films.getTitle());
+                return true;
             }
         }
-        return "Not in this Film";
+        System.out.println("Not in this Film");
+        return false;
     }
 
 }

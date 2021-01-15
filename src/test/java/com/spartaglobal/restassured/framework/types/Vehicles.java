@@ -74,29 +74,33 @@ public class Vehicles {
 
     public String getUrl() { return url; }
 
-    public String hasPilot(String person)
+    public boolean hasPilot(String person)
     {
         arr = getPilots();
         People people;
         for (String s : arr) {
             people = (People) ValueInjector.createDTO(s);
             if (person.equals(people.getName())) {
-                return people.getName() + " is a Pilot";
+                System.out.println(people.getName() + " is a Pilot");
+                return true;
             }
         }
-        return "No Pilot with this name found";
+        System.out.println("No Pilot with this name found");
+        return false;
     }
 
-    public String inFilm(String film)
+    public boolean inFilm(String film)
     {
         arr = getFilms();
         Films films;
         for (String s : arr) {
             films = (Films) ValueInjector.createDTO(s);
             if (film.equals(films.getTitle())) {
-                return "Is in this Film: " + films.getTitle();
+                System.out.println("Is in this Film: " + films.getTitle());
+                return true;
             }
         }
-        return "Not in this Film";
+        System.out.println("Not in this Film");
+        return false;
     }
 }

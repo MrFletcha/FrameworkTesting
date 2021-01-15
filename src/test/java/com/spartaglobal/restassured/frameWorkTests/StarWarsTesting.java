@@ -27,6 +27,7 @@ public class StarWarsTesting {
         url = "https://swapi.dev/api/people/1/";
         connectionManager.setUrl(url);
         connectionManager.setResource(url);
+        people = (People) ValueInjector.createDTO(url);
     }
 
     @Test
@@ -40,10 +41,19 @@ public class StarWarsTesting {
     @ParameterizedTest
     @ValueSource(strings = {"http://swapi.dev/api/people/1/", "http://swapi.dev/api/planets/1/"})
     @DisplayName("Error codes on incorrect url")
-    void errorCodeCheck(String url)
+    void errorCodeCheck(String urls)
     {
-        Assertions.assertEquals(301, connectionManager.isValidAddress(url));
+        Assertions.assertEquals(301, connectionManager.isValidAddress(urls));
     }
+
+    @Test
+    @DisplayName("Error codes on incorrect url manual")
+    void errorCodeCheckTwo()
+    {
+        Assertions.assertEquals(301, connectionManager.isValidAddress(people.getHomeworld()));
+        Assertions.assertEquals(301, connectionManager.isValidAddress(people.getStarships().get(0)));
+    }
+
 
     @ParameterizedTest(name = "{index}")
     @ValueSource(strings = {"https://swapi.dev/api/people/1/", "https://swapi.dev/api/planets/1/", "https://swapi.dev/api/starships/12/"})
@@ -90,7 +100,7 @@ public class StarWarsTesting {
             Starship starship = (Starship)
                     ValueInjector.createDTO(people.getStarships().get(0));
 
-            Assertions.assertEquals(people.getName() + " is a Pilot", starship.hasPilot(people.getName()));
+            Assertions.assertTrue(starship.hasPilot(people.getName()));
 
             given().get(people.getStarships().get(0)).then().assertThat()
                     .body("name", Matchers.equalTo(starship.getName()));
@@ -100,7 +110,7 @@ public class StarWarsTesting {
             Planets planets = (Planets)
                     ValueInjector.createDTO(people.getHomeworld());
 
-            Assertions.assertEquals(people.getName() + " is a Resident", planets.hasResidents(people.getName()));
+            Assertions.assertTrue(planets.hasResidents(people.getName()));
 
             given().get(people.getHomeworld()).then().assertThat()
                     .body("name", Matchers.equalTo(planets.getName()));
@@ -108,13 +118,13 @@ public class StarWarsTesting {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"X-wing", "Imperial shuttle"})
+    @ValueSource(strings = {"X-wing"})
     @DisplayName("Search Test")
     void searchTest(String ship)
     {
         people = (People) ValueInjector.createDTO(url);
-        Assertions.assertEquals("Has this Starship: " + ship, people.hasShip(ship));
-        Assertions.assertEquals("No starship with this name found", people.hasShip("falcon"));
+        Assertions.assertTrue(people.hasShip(ship));
+        Assertions.assertFalse(people.hasShip("X"));
     }
 
     @ParameterizedTest
@@ -123,6 +133,12 @@ public class StarWarsTesting {
     void valueExistsClass(String ship)
     {
         Assertions.assertTrue(ValueExists.isStarshipByName(ship));
+    }
+
+    @Test
+    @DisplayName("Value exists manual check")
+    void valueExistsManualCheck() {
+
         Assertions.assertFalse(ValueExists.isStarshipByName("X-"));
         Assertions.assertTrue(ValueExists.isPersonByName("Luke Skywalker"));
         Assertions.assertTrue(ValueExists.isPlanetByName("Tatooine"));
@@ -130,5 +146,6 @@ public class StarWarsTesting {
         Assertions.assertTrue(ValueExists.isFilmByTitle("A New Hope"));
         Assertions.assertTrue(ValueExists.isVehicleByName("Sand Crawler"));
         Assertions.assertTrue(ValueExists.isSpeciesByName("Human"));
+
     }
 }
